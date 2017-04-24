@@ -35,17 +35,17 @@ def write_lines_out(text: str, fout) -> None:
 def change_status(linea: str, estado: str) -> str:
     prefix = linea[0:3]
     
-    if estado == 'formula' or estado == 'block' and prefix == '```':
+    if estado in ['formula', 'block'] and prefix == '```':
         return ('formula_end')
 
-    if estado in ['head_end', 'formula_end']:
-        estado = 'text'
+    if estado in ['head_end', 'formula_end', 'block_end']:
+        return('text')
 
     if estado == 'formula_start':
-        estado = 'formula'
+        return('formula')
         
     if estado == 'block_start':
-        estado = 'block'
+        return('block')
 
     if estado in ['head_start', 'author', 'date']:
         estado = 'head'
